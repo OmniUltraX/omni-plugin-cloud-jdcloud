@@ -1,0 +1,68 @@
+{
+  "id": "omni.cloud.jdcloud",
+  "version": "0.1.0",
+  "displayName": "京东云",
+  "kind": "cloud",
+  "permissions": ["connections:write", "net:connect", "vault:read"],
+  "entry": { "logic": "logic.js" },
+  "methods": [
+    { "name": "testAccount", "permissions": ["net:connect", "vault:read"] },
+    { "name": "listRegions", "permissions": ["net:connect", "vault:read"] },
+    { "name": "getAccount", "permissions": ["net:connect", "vault:read"] },
+    { "name": "listResources", "permissions": ["net:connect", "vault:read"] },
+    { "name": "getResource", "permissions": ["net:connect", "vault:read"] },
+    {
+      "name": "invokeAction",
+      "permissions": ["net:connect", "vault:read"],
+      "dangerAction": "cloud.instance.lifecycle"
+    },
+    { "name": "getMetrics", "permissions": ["net:connect", "vault:read"] },
+    { "name": "queryLogs", "permissions": ["net:connect", "vault:read"] }
+  ],
+  "contributes": {
+    "ui": {
+      "sidebar": true,
+      "connectionForm": {
+        "fields": [
+          { "key": "accessKeyId", "type": "text" },
+          { "key": "accessKeySecret", "type": "password" },
+          { "key": "regions", "type": "multiselect" }
+        ]
+      }
+    },
+    "cloud": {
+      "capabilities": [
+        {
+          "id": "compute",
+          "scope": "region",
+          "detailSlots": ["overview"],
+          "columns": [
+            { "key": "name" },
+            { "key": "status" },
+            { "key": "region" },
+            { "key": "instanceType" },
+            { "key": "zone" },
+            { "key": "publicIp" },
+            { "key": "privateIp" },
+            { "key": "chargeType" },
+            { "key": "os" },
+            { "key": "creationTime" }
+          ],
+          "actions": [
+            { "id": "start", "kind": "plugin" },
+            { "id": "stop", "kind": "plugin" },
+            { "id": "reboot", "kind": "plugin" },
+            { "id": "addSsh", "kind": "host" }
+          ]
+        }
+      ],
+      "regions": [
+        { "id": "cn-north-1", "label": "华北-北京" },
+        { "id": "cn-east-1", "label": "华东-宿迁" },
+        { "id": "cn-east-2", "label": "华东-上海" },
+        { "id": "cn-south-1", "label": "华南-广州" },
+        { "id": "ap-southeast-1", "label": "亚太-曼谷" }
+      ]
+    }
+  }
+}
